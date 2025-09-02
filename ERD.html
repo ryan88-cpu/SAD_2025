@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ERD - Rumah Makan Selera Nusantara</title>
+    <!-- Load Mermaid.js -->
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </head>
+  <body>
+    <h2>ERD - Rumah Makan Selera Nusantara</h2>
+    <h3>Nama: Ryan Supit</h3>
+    <h3>Kelas: System Analysis and Design</h3>
+
+    <pre class="mermaid">
+erDiagram
+    PELANGGAN {
+        int id_pelanggan PK
+        string nama
+        string kontak
+        string alamat
+    }
+    PESANAN {
+        int id_pesanan PK
+        date tgl
+        string jenis_layanan
+        string status
+        int id_pelanggan FK
+        int id_meja
+    }
+    DETAIL_PESANAN {
+        int id_detail PK
+        int id_pesanan FK
+        int id_menu FK
+        int qty
+        string catatan
+    }
+    MENU {
+        int id_menu PK
+        string nama_menu
+        float harga
+        string kategori
+        string status
+    }
+    BAHAN_BAKU {
+        int id_bahan PK
+        string nama
+        string satuan
+        int stok
+        int min_stok
+        date tgl_kedaluwarsa
+    }
+    RECIPE {
+        int id_menu FK
+        int id_bahan FK
+        int qty
+    }
+    PEMBAYARAN {
+        int id_pembayaran PK
+        int id_pesanan FK
+        string metode
+        float jumlah
+        float diskon
+    }
+    REFUND {
+        int id_refund PK
+        int id_pembayaran FK
+        float jumlah
+    }
+    RESERVASI {
+        int id_reservasi PK
+        string nama_pemesan
+        string kontak
+        date tgl_reservasi
+        int jml_orang
+        string status
+        float dp
+    }
+    PEMBELIAN {
+        int id_pembelian PK
+        int id_pemasok FK
+        date tanggal
+        float total
+    }
+    DETAIL_PEMBELIAN {
+        int id_detail_beli PK
+        int id_pembelian FK
+        int id_bahan FK
+        int qty_diterima
+    }
+    PEMASOK {
+        int id_pemasok PK
+        string nama
+        string kontak
+    }
+    KASIR {
+        int id_kasir PK
+        string nama
+        string shift
+    }
+    REKAP_SHIFT {
+        int id_shift PK
+        date tanggal
+        float total_penjualan
+        float selisih_kas
+        int id_kasir FK
+    }
+
+    %% Relationships
+    PELANGGAN ||--o{ PESANAN : "memiliki"
+    PESANAN ||--o{ DETAIL_PESANAN : "terdiri dari"
+    MENU ||--o{ DETAIL_PESANAN : "dipesan"
+    MENU ||--o{ RECIPE : "terdiri dari"
+    RECIPE }o--|| BAHAN_BAKU : "menggunakan"
+    PESANAN ||--o{ PEMBAYARAN : "dibayar"
+    PEMBAYARAN ||--o{ REFUND : "punya"
+    PEMASOK ||--o{ PEMBELIAN : "menerima"
+    PEMBELIAN ||--o{ DETAIL_PEMBELIAN : "terdiri dari"
+    DETAIL_PEMBELIAN }o--|| BAHAN_BAKU : "menambah"
+    KASIR ||--o{ REKAP_SHIFT : "mengelola"
+  </pre
+    >
+  </body>
+</html>

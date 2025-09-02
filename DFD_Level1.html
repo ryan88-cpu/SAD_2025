@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DFD Level 1 - Rumah Makan Selera Nusantara</title>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </head>
+  <body>
+    <h2>DFD Level 1 - Rumah Makan Selera Nusantara</h2>
+    <h3>Nama: Ryan Supit</h3>
+    <h3>Kelas: System Analysis and Design</h3>
+
+    <pre class="mermaid">
+flowchart TB
+    %% --- PROSES ---
+    P1["1. Kelola Menu & Stok"]
+    P2["2. Pencatatan Pesanan"]
+    P3["3. Cek & Reservasi Stok"]
+    P4["4. Produksi Pesanan"]
+    P5["5. Serah Terima Pesanan"]
+    P6["6. Pembayaran & Refund"]
+    P7["7. Pembelian Bahan"]
+    P8["8. Laporan & Rekap Shift"]
+    P9["9. Reservasi Meja"]
+
+    %% --- ENTITAS EKSTERNAL ---
+    Pelanggan([Pelanggan])
+    Kasir([Kasir])
+    Pelayan([Pelayan])
+    Dapur([Dapur / Tim Koki])
+    Kurir([Kurir])
+    Admin([Admin])
+    Pemilik([Pemilik])
+    Pemasok([Pemasok])
+    Supervisor([Supervisor])
+
+    %% --- ALIRAN DATA ---
+    Pelanggan -->|Pesanan / Reservasi| P2
+    P2 -->|Data Pesanan| P3
+    P3 -->|Order Slip OK| P4
+    P3 -->|Notifikasi stok kurang| Kasir
+    P4 -->|Status Siap| P5
+    P5 -->|Pesanan Diterima| Pelanggan
+
+    Kasir -->|Data Pembayaran| P6
+    P6 -->|Nota / Status Bayar| Kasir
+
+    Admin -->|Update Menu / Stok| P1
+    P1 -->|Status Stok| Admin
+
+    P7 -->|Purchase Order| Pemasok
+    Pemasok -->|Pengiriman Barang| P7
+
+    P8 -->|Laporan Penjualan| Pemilik
+    P8 -->|Rekap Shift| Supervisor
+  </pre
+    >
+  </body>
+</html>
